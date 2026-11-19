@@ -57,8 +57,8 @@ note_qa/
 1. 获取代码并进入项目目录：
 
    ```
-   git clone https://github.com/povr26119-tech/rag-note-qa.git
-   cd rag-note-qa
+   git clone https://github.com/Pippy26/Retell.git
+   cd Retell
    ```
 
 2. 创建虚拟环境并安装依赖：
