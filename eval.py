@@ -1,4 +1,10 @@
 from eval_set import EVAL_SET
+from vector_store import load_index
+from embeddings import SiliconFlowEmbedding
+from rag import ask
+
+index = load_index("index.json")
+emb = SiliconFlowEmbedding()
 
 def contains_all(test_string: str, key_word_list: list[str]) -> bool:
     if key_word_list:
@@ -23,16 +29,30 @@ def judge(question: dict, answer: str) -> bool:
     else:
         raise ValueError(f"{question['question']}这条问题的type类型写错了,错误信息:{question['type']}")
 
+
+def get_answer(question: str) -> str:
+    reply, result = ask(question, index, emb)
+
+    return reply
+
+
+def run_eval(eval_set: list[dict]):
+    total_right_number = 0
+    for index in range(len(eval_set)):
+        answer = get_answer(eval_set[index]['question'])
+        try:
+            if judge(eval_set[index], answer):
+                print(f"[通过] {eval_set[index]['question']}")
+                total_right_number += 1
+            else:
+                print(f"[不通过] {eval_set[index]['question']}")
+                print(answer)
+
+        except ValueError as e:
+            print(f"题目出错了! {e}")
+
+
+    print(f"通过{total_right_number}/{len(eval_set)}")
+
 if __name__ == "__main__":
-    # print(judge({"question": "x", "type": "must_not_includ", "keywords": ["a"]}, "a"))
-    print(judge(EVAL_SET[0], "需要向量化模块、数据库、文档加载和切分模块、向量检索、大模型模块"))
-    print(judge(EVAL_SET[0], "需要向量化模块和大模型模块"))
-    print(judge(EVAL_SET[2], "教程没有使用成熟的数据库，而是用 Numpy 自己实现"))
-    print(judge(EVAL_SET[2], "教程用的是 Chroma"))
-
-
-
-
-
-
-
+    run_eval(EVAL_SET)
