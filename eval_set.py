@@ -35,7 +35,7 @@ EVAL_SET =[
         "question": "教程的 Embedding 代码里，默认使用的具体模型名称是什么",
         "type": "must_include",
         "keywords": ["text-embedding-3-large"],
-        "category": "cross_chunk"
+        "category": "completely_relevant"
     },
     # ---- 跨 chunk 类：答案要拼几处内容 ----
     {
