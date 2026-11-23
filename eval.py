@@ -2,6 +2,7 @@ from eval_set import EVAL_SET
 from vector_store import load_index
 from embeddings import SiliconFlowEmbedding
 from rag import ask
+from collections import Counter
 
 index = load_index("index.json")
 emb = SiliconFlowEmbedding()
@@ -37,20 +38,33 @@ def get_answer(question: str) -> str:
 
 
 def run_eval(eval_set: list[dict]):
+    fail_dict = {}
+    pass_dict = {}
     total_right_number = 0
     for index in range(len(eval_set)):
         answer = get_answer(eval_set[index]['question'])
         try:
             if judge(eval_set[index], answer):
                 print(f"[通过] {eval_set[index]['question']}")
+                if eval_set[index]["category"] not in pass_dict:
+                    pass_dict[eval_set[index]["category"]] = 1
+                else:
+                    pass_dict[eval_set[index]["category"]] += 1
                 total_right_number += 1
             else:
                 print(f"[不通过] {eval_set[index]['question']}")
                 print(answer)
+                if eval_set[index]["category"] not in fail_dict:
+                    fail_dict[eval_set[index]["category"]] = 1
+                else:
+                    fail_dict[eval_set[index]["category"]] += 1
 
         except ValueError as e:
             print(f"题目出错了! {e}")
 
+    total_dict = Counter(fail_dict) + Counter(pass_dict)
+    for key, value in sorted(total_dict.items(), reverse=True):
+        print(f"{key} 通过{pass_dict.get(key, 0)}/{value}")
 
     print(f"通过{total_right_number}/{len(eval_set)}")
 
