@@ -3,10 +3,11 @@ from rag import ask
 from llm import NO_ANSWER
 from vector_store import load_index
 from embeddings import SiliconFlowEmbedding
+from build_index import INDEX_PATH
 
 @st.cache_resource
 def get_resources():
-    index = load_index("index.json")
+    index = load_index(INDEX_PATH)
     emb = SiliconFlowEmbedding()
     return index, emb
 
