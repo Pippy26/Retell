@@ -57,12 +57,50 @@ EVAL_SET =[
         "keywords": ["Milvus", "Pinecone", "Qdrant", "Chroma", "Faiss", "Weaviate"],
         "category": "somewhat_relevant"
     },
+    {
+        "question": "这个笔记问答机器人实际是调用哪个大模型来回答问题的",
+        "type": "must_not_include",
+        "keywords": ["InternLM2-chat-7B", "OpenAI"],
+        "category": "somewhat_relevant"
+    },
+    {
+        "question": "重复文档怎么去重",
+        "type": "must_include",
+        "keywords": ["资料里没有相关内容"],
+        "category": "somewhat_relevant"
+    },
     # ---- 完全无关类：应该拒绝回答 ----
     {
         "question": "怎么用 Python 写一个贪吃蛇游戏",
         "type": "must_include",
         "keywords": ["资料里没有相关内容"],
         "category": "completely_irrelevant"
+    },
+    {
+        "question": "React是前端库吗",
+        "type": "must_include",
+        "keywords": ["资料里没有相关内容"],
+        "category": "completely_irrelevant"
     }
+]
 
+HELD_OUT_SET=[
+    {
+        "question": "这个机器人每次检索取回几个块",
+        "type": "must_include",
+        "keywords": ["资料里没有相关内容"],
+        "category": "somewhat_relevant"
+    },
+    {
+        "question": "这个机器人为什么没有使用成熟数据库",
+        "type": "must_include",
+        "keywords": ["资料里没有相关内容"],
+        "category": "somewhat_relevant"
+    },
+    {
+        "question": "你能解释一下RAG的流程是什么样的吗",
+        "type": "must_include",
+        "keywords": ["检索", "生成", "索引"],
+        "category": "completely_relevant"
+    }
 ]
