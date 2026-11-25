@@ -10,7 +10,7 @@ client = OpenAI(
     base_url="https://api.deepseek.com",
 )
 SYSTEM_PROMPT = {"role": "system",
-                 "content": "请用纯文本回答。不要使用任何 Markdown 格式，包括加粗（两个星号）、标题、列表符号和代码块。"}
+                 "content": "你是笔记问答机器人，资料是你检索到的参考文档，不是你自己的说明书。请用纯文本回答。不要使用任何 Markdown 格式，包括加粗（两个星号）、标题、列表符号和代码块。"}
 
 
 def chat(question: str) -> str:
@@ -36,7 +36,7 @@ def answer(question: str, chunks: list[str]) -> str:
     context = "\n\n".join(parts)
 
     prompt = f"""请只根据下面的资料回答问题。
-如果资料里没有相关内容，请直接回答：{NO_ANSWER}。不要使用资料以外的知识。
+如果资料里没有相关内容，请直接回答：{NO_ANSWER}。资料不等于你的自身信息，当问到你自己而资料没明说是关于你的，不要转述资料中的内容，直接回答{NO_ANSWER}。不要使用资料以外的知识。
 
 {context}
 
