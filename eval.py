@@ -1,4 +1,4 @@
-from eval_set import EVAL_SET
+from eval_set import EVAL_SET, HELD_OUT_SET
 from vector_store import load_index
 from embeddings import SiliconFlowEmbedding
 from rag import ask
