@@ -3,8 +3,9 @@ from vector_store import load_index
 from embeddings import SiliconFlowEmbedding
 from rag import ask
 from collections import Counter
+from build_index import INDEX_PATH
 
-index = load_index("index.json")
+index = load_index(INDEX_PATH)
 emb = SiliconFlowEmbedding()
 
 def contains_all(test_string: str, key_word_list: list[str]) -> bool:
