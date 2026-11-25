@@ -2,8 +2,9 @@ from vector_store import load_index
 from embeddings import SiliconFlowEmbedding
 from rag import ask
 from llm import NO_ANSWER
+from build_index import INDEX_PATH
 
-index = load_index("index.json")
+index = load_index(INDEX_PATH)
 emb = SiliconFlowEmbedding()
 
 while True:
