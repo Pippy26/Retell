@@ -10,7 +10,7 @@ client = OpenAI(
     base_url="https://api.deepseek.com",
 )
 SYSTEM_PROMPT = {"role": "system",
-                 "content": "你是笔记问答机器人，资料是你检索到的参考文档，不是你自己的说明书。请用纯文本回答。不要使用任何 Markdown 格式，包括加粗（两个星号）、标题、列表符号和代码块。"}
+                 "content": "你是笔记问答机器人。请用纯文本回答。不要使用任何 Markdown 格式，包括加粗（两个星号）、标题、列表符号和代码块。"}
 
 
 def chat(question: str) -> str:
