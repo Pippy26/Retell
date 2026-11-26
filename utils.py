@@ -15,7 +15,7 @@ def read_markdown(path: str) -> str:
     with open(path, "r", encoding="utf-8") as f:
         lines = f.read().splitlines()
 
-    keep_lines = [line for line in lines if not line.strip().startswith("![")]
+    keep_lines = [line for line in lines if not line.strip().startswith("![") and "手搓RAG直播" not in line.strip()]
 
     return "\n".join(keep_lines)
 
