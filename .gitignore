@@ -2,3 +2,6 @@
 .venv/
 __pycache__/
 .idea/
+index_*.json
+!index_500.json
+diagnose.py
