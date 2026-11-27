@@ -1,7 +1,7 @@
-def load_chunks(path: str, max_len: int = 500) -> list[str]:
+def load_chunks(path: str, max_len: int = 500, overlap : int=0) -> list[str]:
     text = read_markdown(path)
     result = split_blocks(text)
-    chunks = merge_blocks(result, max_len)
+    chunks = merge_blocks(result, max_len, overlap)
     final_chunks = []
     for chunk in chunks:
         if len(chunk) > max_len:
@@ -51,22 +51,33 @@ def split_blocks(text: str) -> list[str]:
     return result
 
 
-def merge_blocks(blocks, max_len=500):
+def merge_blocks(blocks, max_len=500, overlap: int = 0) -> list[str]:
     chunks = []
-    current = ""
-    for block in blocks:
-        if current == "":
-            current = current + block
-
-        elif len(current) + 2 + len(block) <= max_len:
-            current = current + "\n\n" + block
-
+    current = []
+    for para in blocks:
+        candidate = current + [para]
+        candidate_text = "\n\n".join(candidate)
+        if len(candidate_text) <= max_len:
+            current.append(para)
         else:
-            chunks.append(current)
-            current = block
-
+            if current:
+                chunks.append("\n\n".join(current))
+            overlap_paras = []
+            total = 0
+            for p in reversed(current):
+                add_len = len(p)
+                if total + add_len > overlap:
+                    break
+                overlap_paras.insert(0, p)
+                total += add_len
+            new_candidate = overlap_paras + [para]
+            new_text = "\n\n".join(new_candidate)
+            if len(new_text) <= max_len:
+                current = new_candidate
+            else:
+                current = [para]
     if current:
-        chunks.append(current)
+        chunks.append("\n\n".join(current))
     return chunks
 
 
